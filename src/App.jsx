@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Resume from "./components/Resume";
@@ -9,7 +8,8 @@ import BackgroundGlow from "./components/BackgroundGlow";
 /**
  * App
  * Main application component managing active page state (Home vs Resume),
- * synchronized with URL hash for easy sharing and browser back/forward support.
+ * synchronized with URL hash.
+ * Page transitions use hardware-accelerated CSS (translate3d/opacity) for 60+ FPS zero-lag switching.
  */
 export default function App() {
   const [activePage, setActivePage] = useState(() => {
@@ -54,35 +54,17 @@ export default function App() {
       {/* Top Navigation */}
       <Navbar activePage={activePage} setActivePage={navigateTo} />
 
-      {/* Main Content Area with Page Transitions */}
+      {/* Main Content Area with Pure GPU-Accelerated CSS Transitions */}
       <main className={`relative z-10 flex-1 flex flex-col w-full ${
         isHome ? "min-h-0 overflow-hidden justify-center" : ""
       }`}>
-        <AnimatePresence mode="wait">
+        <div key={activePage} className="animate-page-enter flex-1 flex flex-col w-full">
           {activePage === "home" ? (
-            <motion.div
-              key="home"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="h-full flex-1 flex flex-col justify-center min-h-0"
-            >
-              <Hero onNavigateResume={() => navigateTo("resume")} />
-            </motion.div>
+            <Hero onNavigateResume={() => navigateTo("resume")} />
           ) : (
-            <motion.div
-              key="resume"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
-              className="flex-1 flex flex-col"
-            >
-              <Resume />
-            </motion.div>
+            <Resume />
           )}
-        </AnimatePresence>
+        </div>
       </main>
 
       {/* Footer */}

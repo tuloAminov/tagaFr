@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { 
   experiences, 
   projects, 
@@ -21,7 +20,8 @@ import {
 
 /**
  * Resume
- * Complete resume page view with Experience, Projects, Education, Tech Stack, and Beyond Code sections.
+ * Complete resume page view with Experience, Projects, Education, and Tech Stack.
+ * Uses pure GPU-accelerated CSS animations (translate3d/opacity) for buttery smooth 60+ FPS performance.
  */
 export default function Resume() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -39,38 +39,17 @@ export default function Resume() {
     ? techStack
     : techStack.filter((t) => t.category === activeCategory);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-  };
-
   return (
     <div className="resume-container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       {/* 1. Header with Bio & Contacts */}
       <ResumeHeader />
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-16"
-      >
+      <div className="space-y-16">
         {/* 2. СЕКЦИЯ "ОПЫТ" (с иконкой стрелки >) */}
-        <motion.section variants={itemVariants} className="relative">
+        <section 
+          className="relative animate-fade-up"
+          style={{ animationDelay: "40ms" }}
+        >
           <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-mono font-bold">
               <ChevronRight className="w-5 h-5 stroke-[2.5]" />
@@ -86,10 +65,13 @@ export default function Resume() {
               <ExperienceCard key={exp.id} experience={exp} />
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* 3. СЕКЦИЯ "ПРОЕКТЫ" */}
-        <motion.section variants={itemVariants} className="relative">
+        <section 
+          className="relative animate-fade-up"
+          style={{ animationDelay: "80ms" }}
+        >
           <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-mono font-bold">
               <Layers className="w-4 h-4" />
@@ -105,10 +87,13 @@ export default function Resume() {
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* 4. СЕКЦИЯ "ОБРАЗОВАНИЕ" */}
-        <motion.section variants={itemVariants} className="relative">
+        <section 
+          className="relative animate-fade-up"
+          style={{ animationDelay: "120ms" }}
+        >
           <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-mono font-bold">
               <GraduationCap className="w-4 h-4" />
@@ -124,10 +109,13 @@ export default function Resume() {
               <EducationCard key={edu.id} education={edu} />
             ))}
           </div>
-        </motion.section>
+        </section>
 
         {/* 5. СЕКЦИЯ "СТЕК" */}
-        <motion.section variants={itemVariants} className="relative">
+        <section 
+          className="relative animate-fade-up"
+          style={{ animationDelay: "160ms" }}
+        >
           <div className="flex items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 font-mono font-bold">
@@ -167,8 +155,8 @@ export default function Resume() {
               ))}
             </div>
           </div>
-        </motion.section>
-      </motion.div>
+        </section>
+      </div>
 
       {/* Floating Bottom-Right PDF Download Button */}
       <FloatingPdfButton />

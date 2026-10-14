@@ -1,15 +1,13 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { personalData } from "../data";
-import { Sparkles } from "lucide-react";
 
 /**
  * Navbar
- * Top navigation bar with "Главная" and "Резюме" tabs, brand indicator and active animation.
+ * Top navigation bar with "Главная" and "Резюме" tabs.
+ * Uses lightweight pure CSS transitions for instant zero-lag page switching.
  */
 export default function Navbar({ activePage, setActivePage }) {
   const isResume = activePage === "resume";
-
   const isHome = activePage === "home";
 
   return (
@@ -44,17 +42,10 @@ export default function Navbar({ activePage, setActivePage }) {
               onClick={() => setActivePage("home")}
               className={`relative px-4 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
                 activePage === "home"
-                  ? "text-white"
-                  : "text-zinc-400 hover:text-zinc-200"
+                  ? "text-white bg-white/10 border border-purple-500/30 shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5 border border-transparent"
               }`}
             >
-              {activePage === "home" && (
-                <motion.div
-                  layoutId="active-pill"
-                  className="absolute inset-0 bg-white/10 border border-purple-500/30 rounded-lg shadow-sm"
-                  transition={{ type: "spring", stiffness: 450, damping: 30 }}
-                />
-              )}
               <span className="relative z-10 flex items-center gap-1.5">
                 Главная
               </span>
@@ -64,17 +55,10 @@ export default function Navbar({ activePage, setActivePage }) {
               onClick={() => setActivePage("resume")}
               className={`relative px-4 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
                 activePage === "resume"
-                  ? "text-white"
-                  : "text-zinc-400 hover:text-zinc-200"
+                  ? "text-white bg-white/10 border border-emerald-500/30 shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5 border border-transparent"
               }`}
             >
-              {activePage === "resume" && (
-                <motion.div
-                  layoutId="active-pill"
-                  className="absolute inset-0 bg-white/10 border border-emerald-500/30 rounded-lg shadow-sm"
-                  transition={{ type: "spring", stiffness: 450, damping: 30 }}
-                />
-              )}
               <span className="relative z-10 flex items-center gap-1.5">
                 Резюме
                 <span className={`w-1.5 h-1.5 rounded-full ${isResume ? "bg-emerald-400" : "bg-purple-400"}`} />
