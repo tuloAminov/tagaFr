@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #08090d;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Glassmorphism utility classes */
+.glass-card {
+  background: rgba(18, 19, 26, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.glass-nav {
+  background: rgba(10, 11, 16, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Background blob animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.08);
+  }
+  66% {
+    transform: translate(-25px, 25px) scale(0.95);
+  }
+}
+
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-35px, 35px) scale(1.05);
+  }
+  66% {
+    transform: translate(30px, -20px) scale(0.92);
+  }
+}
+
+.animate-blob-1 {
+  animation: float-slow 16s ease-in-out infinite;
+}
+
+.animate-blob-2 {
+  animation: float-reverse 20s ease-in-out infinite;
+}
+
+/* Direct PDF Export Mode styling (matches exact clean paper appearance) */
+.pdf-export-mode {
+  background: #ffffff !important;
+  color: #111827 !important;
+  padding: 24px 28px !important;
+  max-width: 800px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+.pdf-export-mode .glass-card {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: none !important;
+  color: #111827 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  margin-bottom: 12px !important;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}
+
+.pdf-export-mode h1,
+.pdf-export-mode h2,
+.pdf-export-mode h3 {
+  color: #111827 !important;
+  font-weight: 700 !important;
+}
+
+.pdf-export-mode p,
+.pdf-export-mode span,
+.pdf-export-mode li,
+.pdf-export-mode a {
+  color: #374151 !important;
+}
+
+.pdf-export-mode svg {
+  color: #059669 !important;
+  stroke: #059669 !important;
+}
+
+.pdf-export-mode .no-print {
+  display: none !important;
+}
+
+.pdf-export-mode .badge-print,
+.pdf-export-mode span[class*="rounded"] {
+  background: #f3f4f6 !important;
+  color: #1f2937 !important;
+  border-color: #d1d5db !important;
+}
+
+/* Fix clipping of contact texts (email, telegram, location) in PDF */
+.pdf-export-mode a,
+.pdf-export-mode span,
+.pdf-export-mode p {
+  overflow: visible !important;
+  text-overflow: unset !important;
+  line-height: 1.5 !important;
+}
+
+/* Reduce vertical gaps in PDF to prevent unnecessary trailing blank pages */
+.pdf-export-mode .space-y-16 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 18px !important;
+}
+
+.pdf-export-mode .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 10px !important;
+}
+
+.pdf-export-mode .mb-12 {
+  margin-bottom: 14px !important;
+}
+
+.pdf-export-mode .mb-6 {
+  margin-bottom: 8px !important;
+}
+
+/* Eliminate bottom spacing on last elements to prevent trailing blank page */
+.pdf-export-mode > *:last-child,
+.pdf-export-mode section:last-child,
+.pdf-export-mode .glass-card:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* PDF Print Styles for Window.print() */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-size: 12pt;
+  }
+
+  /* Hide interactive / non-printable elements */
+  .no-print,
+  nav,
+  .floating-pdf-btn,
+  .bg-glow-container,
+  footer {
+    display: none !important;
+  }
+
+  /* Reset layout constraints for print */
+  #root, main, .resume-container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .glass-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+    color: #111827 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 16px !important;
+    backdrop-filter: none !important;
+  }
+
+  .text-zinc-100, .text-zinc-200, .text-white {
+    color: #111827 !important;
+  }
+
+  .text-zinc-400, .text-zinc-500, .text-zinc-300 {
+    color: #4b5563 !important;
+  }
+
+  .badge-print {
+    background: #f3f4f6 !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+  }
+
+  a {
+    text-decoration: underline !important;
+    color: #2563eb !important;
+  }
+
+  /* Ensure page margins */
+  @page {
+    margin: 1.5cm;
+    size: auto;
+  }
+}
